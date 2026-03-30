@@ -114,17 +114,36 @@ Your answer:
 
 ```text
 
+First steps are pretty expected: first of all I'd like to hear from you about this app, the project, what issues you're already familiar with and what do you expect from my work as I can be very agile with the requirements.
+
+Next step would be get to know the project from codebase layer, understand the techstack and approaches.
+Followed by running it, in all supported environments and platforms to ensure it runs on my devices as well. Followed by using and testing of the application, I'll go through it as a new user and prepare a report with any potential issues I can find, beside the ones you are already familiar with.
+At the same time it's reasonable to watch out for crash reports and logs while running the app.
+
+I can document the any findings in any comfortable way for you.
+Personally, I prefer using Notion, its styling, collobaration features and simplicity is just enough for me.
+
 ```
 
 Evaluator notes:
 
 ```text
-
+Good practical instincts: you start with stakeholder context, environment setup, running the app locally, exploratory testing, and checking crash reports. That fits the role. The answer is still too loose for a senior-first-week plan. It does not explicitly name analytics, critical user flows, release path, dependency boundaries, or how you would rank issues once you find them. The Notion point is low-value in this answer; the interviewer wants prioritization and ownership more than tooling preference. A stronger version would sound more structured: understand build and env setup, identify critical flows, inspect crash and analytics signals, map risky integrations, then produce a short prioritized action plan.
 ```
 
 Score (0-4):
 
+2
+
 Follow-up drill:
+
+Rewrite this answer into 5 short bullets: build and environments, critical flows, telemetry and crash signals, code and integration boundaries, and the exact week-one output you would send to the client.
+
+Ace answer:
+
+```text
+In the first week I would try to get clarity and reduce risk as quickly as possible. First, I’d want a walkthrough from the team or the client on the most important flows, the known issues, and what is already painful today. In parallel, I’d get the app running in all environments, make sure the build and release setup is clear, and verify that I can reproduce the main user journeys on my devices. After that, I’d look at crash reports, logs, analytics if available, and the parts of the codebase around the most critical flows like auth, search, payments, messaging, or notifications. I would not start with refactoring; I would start with understanding where the actual risk is. By the end of that first week, I’d want to send back a short prioritized plan: what looks stable, what looks risky, what I would fix first, and what I still need clarified.
+```
 
 #### Question 2
 
@@ -143,18 +162,37 @@ What a strong answer must cover:
 Your answer:
 
 ```text
+It's a good question as it easy to be blown away with refactoring.
+Well, first of all, we need to identify the issue, how critical it is and how does it tie with existing app architecture.
 
+For any unsignificant issue, for example wrong text, style, etc. - we can just fix an issue and that's it. 
+
+I'd sugget doing major refactoring or change in case it gives a performance improvement and/or solves the issue the best way for end-user, which means: the app is smooth, the user experience doesn't drop and behavior is preserved, like navigation.
+
+Working on different projects gives you an experience between good and bad code results, unless the budget allows us to, I'd suggest to add testing if there is none. Starting with unit testing of critical parts, gives us opportunity to be forced to write expected behavior, but it's important to create meaningful test and not just tests for tests.
+
+I'd highlight that everything I'm describing to you requires understanding and envolvement from every team member, it shouldn't be forced but rather embraced by everyone.
 ```
 
 Evaluator notes:
 
 ```text
-
+You show the right instinct against unnecessary refactoring, and the performance or user-impact lens is useful. The answer is missing the decision framework the interviewer is looking for. You do not clearly separate low-value fixes, targeted refactors, and deeper structural changes, and you do not explain what concrete signals would justify each one. The testing point is good, but it appears late and is not tied to release risk or sequencing. The final point about team buy-in is reasonable, but it reads as process commentary rather than technical judgment. This is acceptable but not yet senior-sharp.
 ```
 
 Score (0-4):
 
+2
+
 Follow-up drill:
+
+Answer again using three buckets only: keep as-is, incremental refactor, deep change. For each bucket, give one trigger, one example, and one test or release-safety consideration.
+
+Ace answer:
+
+```text
+I usually think about this in three buckets. If the issue is local and low-risk, like a UI bug or a small logic mistake, I keep the structure as-is and just fix the problem. If the same area is causing repeated friction, unstable behavior, or hard-to-test code, I prefer an incremental refactor around that feature rather than a broad rewrite. A deeper structural change is justified only when the current setup is actively slowing delivery, causing repeated regressions, or making critical flows unreliable. In that case I would still sequence it carefully and put tests around the risky behavior first, so we are not changing structure blindly. My default is always to preserve delivery and user behavior unless there is a very clear reason not to.
+```
 
 ### Round 2 - Debugging, Performance, And Lightweight Personalization
 
@@ -293,17 +331,50 @@ Your answer:
 
 ```text
 
+While I can see lots of issues in this code snippet, I'd prioritaize them the following way:
+1. the crash is a high priority issue - end user should at all time have an access to the screen.
+2. Ensure data is displayed correctly - and fix the  inconsistent ranking
+3. Based on the code snippet the screen should laggy on mid-range and high range devices.
+   
+If you ask me what issues in particular I see? Let's start:
+1. the screen are doing API calls extensively without any proper error handling or debounce - which is highly a chance for the crash on this screen
+2. The API calls should be reduced: by eliminating duplicates or unnecessary calls from listeners or on onTap callback
+3. Use await when calling API - this is a high cause of quirks on UI
+4. all controllers should be closed in dispose to eliminate memory leaks
+5. The visibility should be moved to loadHotels method
+6. TravelApi shouldn't be passed to screens - it's not their concern
+7. The hotel list is visible with loader at the same time
+8. I also feel like there is an error in sorting 
+   
+To keep the fix simple: we can leave passing TravelApi and focus only on issues on the page itself.
+
+To ensure that these issues won't be a case, I'd suggest adding tests if they are welcomed. Here what I'd test:
+1. Error handling - we need to ensure that API calls do not throw an unhandlded errors
+2. Testing switching tabs and search to number of API calls - we need to be sure in number of API calls in order to reduce quirks or lags on mid-range devices
+3. Testing of the screen behavior when each element is visible or not
+
+
 ```
 
 Evaluator notes:
 
 ```text
-
+You correctly prioritize the crash first and you notice several real issues: listener-driven request churn, missing dispose cleanup, duplicate fetches, and a likely ranking problem. The main weakness is prioritization accuracy and technical precision. You miss the most likely crash source: async requests finishing after the widget lifecycle changes and calling setState after dispose, plus overlapping requests racing each other. One of your points is incorrect: the API call already uses await. A few other comments are too vague to be useful in an interview, such as moving visibility to loadHotels. The fix and test plan also stay too shallow; you need to name debounce or throttling, request cancellation or stale-response guarding, controller disposal, and a smaller verification loop around crash reproduction, frame timing, and deterministic ranking.
 ```
 
 Score (0-4):
 
+1
+
 Follow-up drill:
+
+Re-answer this as a top-5 review. For each issue, give symptom, root cause, smallest safe fix, and the exact test or measurement you would use to verify it.
+
+Ace answer:
+
+```text
+I’d treat the crash as the highest priority, because the most likely issue here is overlapping async requests combined with setState being called after the widget state has changed or been disposed. The smallest safe fix is to debounce the search input, avoid firing on every tab-controller tick, guard against stale responses, and check mounted before calling setState. The second issue is request churn in general: search, tab changes, and returning from details can all trigger new fetches, so I’d reduce duplicate calls before doing bigger refactoring. The third issue is performance, because filtering and reranking are happening repeatedly on the UI side, so I’d move ranking logic out of the widget and keep the build method lighter. The fourth issue is lifecycle cleanup, because the text controller and tab controller are not disposed. The fifth issue is ranking consistency: I’d keep a deterministic base order and apply only a small bounded personalization boost instead of letting the client-side score dominate everything. To verify the fixes, I’d reproduce fast search plus tab switching in a widget or integration scenario, measure request count, profile frame timing in DevTools on Android, and add fixture-based tests for ranking so the same inputs always produce the same order.
+```
 
 #### Question 2
 
@@ -322,18 +393,39 @@ What a strong answer must cover:
 Your answer:
 
 ```text
+This is somewhat a tricky question, it's always better to think in some defined bounderies or have an example. 
+
+From the context I have, I'd say we need to define a clear bounderies of the personalization: with clear score and priorities.
+
+Are prices more important than location, etc.?
+
+The decision making system should be unified and not spread out accross the codebase and preferrably well-tested, in this case we would know what to expect in each critical case or based on the user using test fixtures.
+
+To understand whether this approach is helping users rather than confusing them, we can use analytics: for example how often hotel with index=0 was pressed or request in-app review for the results: in a way of dialog or thumb up/down to search results or wherever it matters the most.
+
+I'd stick to the above in this case.
 
 ```
 
 Evaluator notes:
 
 ```text
-
+This answer has the right direction: define clear boundaries, keep the logic centralized, make the scoring testable, and validate usefulness with analytics. The weakness is that it stays too conceptual. The interviewer needs a more concrete, deterministic proposal. You do not name the actual user signals you would start with, how they would combine with the baseline ranking, how large the boost should be, or how you would stop personalization from overpowering obvious relevance signals like availability, price, or distance. You also do not explain rollout safety clearly enough. A stronger answer would describe a bounded scoring function, a dedicated ranking service or use case, snapshot tests or fixture tests, and one measurable signal to decide whether to keep it.
 ```
 
 Score (0-4):
 
+2
+
 Follow-up drill:
+
+Define a first version with 3 to 4 user signals, a capped boost range, one boundary for where the logic lives, and two tests that prove the reranking stays predictable.
+
+Ace answer:
+
+```text
+I’d keep the first version very simple and deterministic. I would start with a normal backend result set and then apply a small on-device boost based on a few signals only, for example recently viewed hotels, favorites, repeated searches for the same destination, and maybe past bookings if that signal exists. I would cap the personalization boost so it can reorder close results, but it cannot push an obviously worse result above a clearly better one on price, availability, or location. I’d keep that logic in one ranking service or use case, not inside the widget and not mixed into the API layer. Then I’d test it with fixed fixtures so the same inputs always give the same order. If we ship it, I’d watch one or two simple metrics like result clicks or detail opens from top positions to see whether the reranking is actually helping.
+```
 
 ### Round 3 - Integrations, Testing, And Release Safety
 
@@ -360,17 +452,35 @@ Your answer:
 
 ```text
 
+Everything starts with clear understanding of the requirements, the scope should be well-known before starting on the feature.
+We're talking about API and SDK clients usage.
+
+My usual approach is separating concerns: data, domain and presentation live separately and keep clear responsibility boundary.
+Domain defines interfaces for repositories or services which are implemented in the data layer by connecting any API/SDK call. 
+I usually use 
+
+
 ```
 
 Evaluator notes:
 
 ```text
-
+The first half is pointed in the right direction: separation of concerns, domain interfaces, and data-layer implementation are all good starts. The answer is effectively unfinished, so it does not meet the question yet. You do not reach the high-risk parts the interviewer actually cares about: payment idempotency, chat delivery failures, notification permissions and token lifecycle, auth boundaries, retries, background behavior, or how failures stay isolated from the rest of the app. You also do not cover documentation or the test strategy that protects these integrations over time. Because this answer stops early, it would likely read as underprepared in a live interview.
 ```
 
 Score (0-4):
 
+1
+
 Follow-up drill:
+
+Rebuild this answer around four layers only: SDK or API client, repository or service, state management, and UI. Then add one concrete failure mode each for payments, chat, and notifications.
+
+Ace answer:
+
+```text
+I’d keep those integrations in four layers. At the bottom, the API or SDK client only talks to the external service. Above that, the repository or service layer translates that into app-level operations and keeps the integration details out of the rest of the code. Then the state layer handles loading, success, retry, and failure states, and the UI just reacts to those states instead of calling SDKs directly. For payments, I’d be careful about idempotency and duplicate submissions. For chat, I’d think about message delivery state, retries, and unread sync. For notifications, I’d separate permission handling, token registration, and what happens when the app is opened from a notification. I’d also document the contract and failure behavior for each integration, and I’d want tests at the service and state layers plus a few smoke flows for the highest-risk user journeys.
+```
 
 #### Question 2
 
@@ -390,17 +500,38 @@ Your answer:
 
 ```text
 
+I'll leave a short answer here. After fixing an urgent crash and performance issue.
+I assume some unit tests are already in place and manual testing is done. Then I would prepare a new build available for Internal Testers on Android and on Testflight, verify the app fix again and if you're happy to see the fix yourself you'll be able to download the app and check.
+
+
+
+The next step would be to promote app to Production and send for review in google console and prepare the next ios app for release and save changes, once done send for app review.
+
+After the app is in production, for the rollback we can only create a new version of the app and go through the same steps above.
+
+Ensure there is a testing of critical parts, manual testing, crash reports are clear and create a new release.
+
 ```
 
 Evaluator notes:
 
 ```text
-
+This answer is pragmatic about distributing builds to testers and validating the fix before full release, which is useful. The problem is that it skips most of the real checklist the question is testing. You do not separate unit, widget, and integration coverage by responsibility. You do not name the critical smoke paths to verify. You mention crash reports, but not staging, release monitoring, phased rollout thinking, or what you would do if a problem appears after release. The rollback statement is also too absolute; mobile rollback is limited, but you can still reduce blast radius through phased rollout, feature flags if available, or server-side disabling of risky functionality. The answer sounds operational, but not yet comprehensive.
 ```
 
 Score (0-4):
 
+1
+
 Follow-up drill:
+
+Rewrite this into three short sections: test coverage by layer, pre-release smoke checklist, and post-release monitoring and rollback plan.
+
+Ace answer:
+
+```text
+After an urgent crash or performance fix, I’d make the test plan match the actual risk. At the unit level, I’d cover the logic that changed, especially state transitions, ranking, or request handling. At the widget level, I’d cover the affected screen behavior, and for the most critical path I’d want at least a light integration or manual smoke check. Before release, I’d verify startup, login if applicable, search, navigation, the fixed screen, and any related flows like checkout, chat, or notifications if they share the same area. I’d ship first to internal testers or staging builds, review crash signals, and only then move to production. If phased rollout is available, I’d use it. And if something still goes wrong, I’d want a clear plan to stop rollout, disable risky behavior from the backend side if possible, and prepare a focused hotfix instead of guessing in production.
+```
 
 ### Round 4 - AWS Boundaries And Technical Leadership Under Ambiguity
 
@@ -426,18 +557,28 @@ What a strong answer must cover:
 Your answer:
 
 ```text
-
+We'll when it comes to the interview as I can help with some bits on AWS, but not solve major requirements.
 ```
 
 Evaluator notes:
 
 ```text
-
+The honesty is good, but this is too short to help you in a real interview. Right now it sounds like you are disclaiming AWS rather than defining a strong mobile ownership boundary. The interviewer needs to hear what you do own with confidence: environment config, API contract validation, auth handling, release flow, crash monitoring, and client-side observability. Then you can clearly state what requires backend or DevOps support, such as infrastructure changes, secrets, service health, and incident response. The goal is not to sound like an AWS expert; it is to sound like a responsible mobile engineer who knows where the line is.
 ```
 
 Score (0-4):
 
+1
+
 Follow-up drill:
+
+Answer this again in two parts only: “what I own on mobile” and “what I would coordinate with backend or DevOps.” Keep each part to 3 to 5 bullets.
+
+Ace answer:
+
+```text
+I’d define that boundary pretty clearly. On the mobile side, I own the app configuration for environments, API contract validation from the client side, auth and token handling in the app, release preparation, and client-side monitoring like crash reporting and issue verification. I also own making sure the app behaves correctly against the existing backend setup. What I would coordinate with backend or DevOps on is infrastructure changes, secrets, service health issues, push or messaging infrastructure, and anything that requires AWS-level access or operational decisions outside the app. So I’m very comfortable owning the mobile side end to end, while staying collaborative and explicit about where cloud ownership belongs.
+```
 
 #### Question 2
 
@@ -456,18 +597,28 @@ What a strong answer must cover:
 Your answer:
 
 ```text
-
+I'd assume the team is small, so I'd direct all my question to manager or to the client, which is you directly.
 ```
 
 Evaluator notes:
 
 ```text
-
+This is the weakest answer because it collapses a nuanced product-risk question into a single communication channel. Asking the manager or client is part of the process, but not the process. You need to show how you reconstruct existing behavior before changing it: inspect the current flow, compare app behavior against backend responses, use QA and support to surface edge cases, check logs or recordings if available, and document the agreed behavior once clarified. This question is one of your real strengths based on Apex and RMS, so the current answer undersells you badly.
 ```
 
 Score (0-4):
 
+1
+
 Follow-up drill:
+
+Re-answer this using your real Apex or RMS experience. Structure it as: understand current behavior, gather evidence from QA or product or support, validate the intended behavior, document the decision, and ship the change safely.
+
+Ace answer:
+
+```text
+When behavior is unclear, I try to understand the current product reality first instead of assuming the documentation is complete. I usually reproduce the flow in the app, inspect the edge cases I can find, and compare that with whatever evidence exists, whether that is QA feedback, product input, support context, or backend responses. That was very relevant in my Apex work, where some flows were not clearly documented and the safest way forward was to reconstruct the expected behavior from multiple sources. Once the intended behavior is clear enough, I document the decision in a way the team can reuse, and then I implement the smallest safe change that preserves expected behavior. That way we keep delivery moving, but we do not accidentally rewrite product logic based on guesswork.
+```
 
 ## Suggested Stories To Rehearse Before The Call
 
