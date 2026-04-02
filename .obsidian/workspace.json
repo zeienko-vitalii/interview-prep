@@ -28,7 +28,7 @@
               "type": "markdown",
               "state": {
                 "file": "neklo-flutter-mobile-developer/first-conversation-prep.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -64,7 +64,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -227,11 +227,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "d266c8ae96b2ffee",
+  "active": "1298b6d8c3786e2c",
   "lastOpenFiles": [
-    "neklo-flutter-mobile-developer/call-delivery-and-confidence-notes.md",
+    "neklo-flutter-mobile-developer/smart-pauses-during-meeting.md",
     "neklo-flutter-mobile-developer/screening-questions-and-tech-notes.md",
     "neklo-flutter-mobile-developer/first-conversation-prep.md",
+    "neklo-flutter-mobile-developer/call-delivery-and-confidence-notes.md",
     "neklo-flutter-mobile-developer/technical-interview-workbook.md",
     "private-client-mobile-app-development-english-russian-speaker/technical-interview-workbook.md",
     "private-client-mobile-app-development-english-russian-speaker/live-call-speech-prep.md",

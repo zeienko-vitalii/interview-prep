@@ -31,6 +31,19 @@ interview. The main things they are probably checking are:
 That means you do not need to prove everything. You need to sound relevant,
 clear, and safe.
 
+## What You Understood About The Client
+
+You can say this if they ask what you understood about the product or if you
+want to show that you did your homework:
+
+From what I understood, the client is building a broader RTLS platform rather
+than only a standalone mobile app. The mobile side seems to be part of a larger
+system for tracking assets and people, supporting staff safety, alerts, and
+workflow monitoring in healthcare and industrial environments. So the role
+looks like it sits at the boundary between Flutter product work, device
+integrations, and reliable interaction with backend and location-related
+systems.
+
 ## Best Project Proof Points For This Role
 
 ### Sensibo

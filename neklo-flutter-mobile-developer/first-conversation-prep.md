@@ -150,6 +150,10 @@ in a way that is stable and maintainable.
 ## Questions You Should Ask
 
 Ask 4 to 6, not too many.
+TOP 3:
+1. Which of the two products needs the most attention first: the main mobile platform or the Smart Tag app?
+2. How much of the current implementation already exists in Flutter versus native code?
+3. What are the biggest technical challenges today: location accuracy, battery usage, device compatibility, or something else?
 
 Good ones:
 - What is the current state of the mobile product today?
