@@ -80,6 +80,11 @@ At a product level, it allows customers to request services, lets technicians
 receive and update assigned work, and gives the business a clear flow from
 booking through service completion.
 
+The chosen direction is a **managed dispatch** model for v1. Customers request
+service, admin or system logic assigns technicians, and technicians work only
+on assigned jobs. Marketplace-style discovery or claiming can be added later if
+the product proves it is worth expanding that way.
+
 The most critical capabilities are:
 - authentication and role-based access
 - booking creation and tracking

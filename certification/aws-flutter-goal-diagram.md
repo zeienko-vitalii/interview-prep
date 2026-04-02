@@ -4,7 +4,9 @@ This diagram shows the core product flow between the user, the Flutter mobile
 app, and AWS.
 
 The same `User` actor represents customer-side interaction first and
-technician-side interaction later in the flow, depending on role.
+technician-side interaction later in the flow, depending on role. The product
+uses a managed dispatch model, so technicians work on assigned jobs rather than
+browsing an open marketplace.
 
 ```mermaid
 sequenceDiagram
@@ -23,6 +25,10 @@ sequenceDiagram
     User->>Mobile App: Check booking progress
     Mobile App->>AWS: Request latest booking status
     AWS-->>Mobile App: Return current status
+
+    User->>Mobile App: Open assigned work
+    Mobile App->>AWS: Request assigned work state
+    AWS-->>Mobile App: Return assigned work details
 
     User->>Mobile App: Update assigned work
     Mobile App->>AWS: Update assigned work

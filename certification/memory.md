@@ -20,6 +20,9 @@ current AWS and Flutter planning thread.
 - `aws-week1-plan.md`  
   Week 1 planning note describing the initial implementation direction at a
   high level.
+- `product-direction.md`  
+  Final comparison and decision note for managed dispatch vs open marketplace
+  strategies.
 
 ## Chosen Product
 
@@ -36,6 +39,8 @@ current AWS and Flutter planning thread.
 - The customer creates a service request.
 - Admin or system logic assigns a technician.
 - The technician sees assigned jobs, not a marketplace of open jobs.
+- The default strategy is **managed dispatch first, marketplace later**.
+- Pure marketplace-first is intentionally not the default direction.
 - Technician operating area and nearby open requests are possible later
   extensions, not part of v1.
 
