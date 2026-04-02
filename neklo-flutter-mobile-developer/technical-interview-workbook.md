@@ -8,6 +8,8 @@ Profile source: Notion page `Vitalii Zeienko` at
 Primary job source: pasted job description for the NEKLO vacancy at
 `https://neklo.com/vacancy-details?id=192553`
 Mode: `generate-workbook`
+Last refreshed: April 2, 2026 after direct recruiter clarification from Alena
+Tsitkova
 
 ## How To Use This Workbook
 
@@ -25,6 +27,9 @@ Mode: `generate-workbook`
   native integration when Flutter is not enough, BLE and GPS-adjacent mobile
   work, backend collaboration, release ownership, and operating in ambiguous
   project environments.
+- Recruiter-confirmed scope: two core products, the main mobile platform and a
+  Smart Tag app, delivered in collaboration with backend, RTLS, and cloud
+  teams for healthcare and industrial indoor-location workflows.
 - Main risk areas: direct native iOS migration depth is weaker than Android,
   MQTT and RTLS are not explicit strengths in the profile, and watch-device or
   peripheral depth needs careful, bounded positioning.
@@ -36,6 +41,7 @@ Mode: `generate-workbook`
 | Pasted JD from `https://neklo.com/vacancy-details?id=192553` | `official` | 2026-04-02 | `provided` | Role responsibilities, client domain, migration scope, BLE and RTLS signals, and the core stack to prepare for |
 | [NEKLO About Us](https://neklo.com/about-us) | `official` | 2026-04-02 | `fetched` | Consultancy model, domain footprint in healthcare and logistics-adjacent work, ownership language, timezone overlap, and documentation-heavy delivery culture |
 | [NEKLO Careers](https://neklo.com/vacancy) | `official` | 2026-04-02 | `fetched` | Remote and flexible-work context, benefits, and the company’s emphasis on challenging client projects rather than a single in-house product |
+| Direct recruiter message from Alena Tsitkova | `official` | 2026-04-02 | `provided` | Confirmed two-product scope, healthcare and industrial indoor-location context, cross-functional NEKLO team shape, client production team size, and daily collaboration with backend, RTLS, and cloud teams |
 | [NEKLO Glassdoor reviews](https://www.glassdoor.com/Reviews/NEKLO-Reviews-E836289.htm) | `candidate-reported` | 2026-04-02 | `partial` | Weak signal suggesting interesting projects, some tech freedom, and a startup-like environment; useful only as low-confidence culture context |
 | Exact vacancy page content via direct fetch | `official` | 2026-04-02 | `partial` | Canonical vacancy URL is available, but detailed prep relies on the pasted JD because the direct page content was not fully fetchable |
 | Reconstructed interview shape from the JD, company materials, and recruiter chat signal | `inference` | 2026-04-02 | `derived` | Used to build a migration-heavy, platform-depth interview loop instead of a generic Flutter CRUD interview plan |
@@ -98,6 +104,12 @@ Mode: `generate-workbook`
   CRUD requests.
 - Domain-wise, the project is closer to indoor location, asset tracking,
   monitoring, and personnel safety than to generic consumer-app work.
+- The recruiter confirmed that delivery spans two related products rather than
+  one isolated app, so architecture and collaboration answers should account
+  for shared logic and product-specific behavior.
+- Cloud-team collaboration is now an explicit signal, but it does not change
+  the main prep focus: mobile boundaries, telemetry behavior, and clean API or
+  event contracts remain the most important talking points.
 
 ### What to revise before interviewing
 
@@ -121,6 +133,16 @@ the JD, the consultancy context, and the recruiter’s “open to a chat” mess
 Expect a practical technical conversation that blends architecture, platform
 depth, and migration judgment rather than a pure algorithm screen.
 
+Refresh note after Alena's follow-up:
+No new tasks were added at this stage. Her message raises confidence in the
+existing loop rather than opening a new technical area. The current questions
+already cover the newly confirmed themes:
+
+- two-product delivery and shared architecture pressure
+- sensor-based features and high-performance monitoring expectations
+- backend, RTLS, and cloud-team collaboration
+- production-team coordination in a mature cross-functional setup
+
 ### Round 1 - Migration Architecture And Ownership
 
 - Timebox: 45 to 60 minutes
@@ -128,7 +150,9 @@ depth, and migration judgment rather than a pure algorithm screen.
 - Goal: show that you can move a real product from separate native codebases
   toward a Flutter-centered architecture without destabilizing delivery.
 - Why this round is likely: the JD centers migration, architecture decisions,
-  and ambiguity handling more than routine feature implementation.
+  and ambiguity handling more than routine feature implementation, and the
+  recruiter confirmed that this work spans two active products rather than a
+  single isolated app.
 
 #### Question 1
 
@@ -370,7 +394,8 @@ Follow-up drill:
 - Goal: show that you can reason about mobile-specific constraints while still
   collaborating effectively with backend and specialist teams.
 - Why this round is likely: the JD names MQTT, REST, RTLS specialists, BLE
-  peripherals, and clear documentation as direct responsibilities.
+  peripherals, and clear documentation as direct responsibilities, and the
+  recruiter explicitly added cloud-team collaboration to the day-to-day setup.
 
 #### Question 1
 
