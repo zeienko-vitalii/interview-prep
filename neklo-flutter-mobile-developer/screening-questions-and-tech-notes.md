@@ -44,6 +44,8 @@ looks like it sits at the boundary between Flutter product work, device
 integrations, and reliable interaction with backend and location-related
 systems.
 
+8 years of commercial software experience building mobile products across logistics, field operations, IoT, healthcare, health and fitness, e-commerce, and education. Strong background in architecture ownership, cross-platform delivery, release automation, testing quality, and native Android/iOS integration where Flutter alone is not enough.
+
 ## Best Project Proof Points For This Role
 
 ### Sensibo
